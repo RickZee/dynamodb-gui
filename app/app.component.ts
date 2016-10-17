@@ -5,7 +5,7 @@ import { DynamoDbService } from './app.dynamodb.service';
 
 @Component({
     selector: 'main-app',
-    templateUrl: 'app.entryComponents.html',
+    templateUrl: 'app/app.component.html',
     providers: [DynamoDbService]
 })
 export class AppComponent implements OnInit {

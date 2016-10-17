@@ -1,21 +1,21 @@
 # To build and run with Docker:
 #
-#  $ docker build -t ng-quickstart .
-#  $ docker run -it --rm -p 3000:3000 -p 3001:3001 ng-quickstart
+#  $ docker build -t ng-dynamodb-gui .
+#  $ docker run -it --rm -p 3000:3000 -p 3001:3001 ng-dynamodb-gui
 #
 FROM node:latest
 
-RUN mkdir -p /quickstart /home/nodejs && \
+RUN mkdir -p /dynamodb-gui /home/nodejs && \
     groupadd -r nodejs && \
     useradd -r -g nodejs -d /home/nodejs -s /sbin/nologin nodejs && \
     chown -R nodejs:nodejs /home/nodejs
 
-WORKDIR /quickstart
-COPY package.json typings.json /quickstart/
+WORKDIR /dynamodb-gui
+COPY package.json typings.json /dynamodb-gui/
 RUN npm install --unsafe-perm=true
 
-COPY . /quickstart
-RUN chown -R nodejs:nodejs /quickstart
+COPY . /dynamodb-gui
+RUN chown -R nodejs:nodejs /dynamodb-gui
 USER nodejs
 
 CMD npm start

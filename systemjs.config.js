@@ -25,8 +25,9 @@
       '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
 
       // other libraries
-      'rxjs':                      'npm:rxjs',
+      'rxjs': 'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      '@angular/material': 'npm:@angular/material',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -39,6 +40,14 @@
       },
       'angular-in-memory-web-api': {
         main: './index.js',
+        defaultExtension: 'js'
+      },
+      '@angular/material': {
+        format: 'cjs',
+        main: 'material.umd.js'
+      },
+      'rxjs': {
+        main: '/bundles/Rx.min.js',
         defaultExtension: 'js'
       }
     }

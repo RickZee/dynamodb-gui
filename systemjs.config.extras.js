@@ -3,9 +3,9 @@
  * Adjust as necessary for your application needs.
  */
 // (function (global) {
-//   System.config({
-//     packages: {
-//       // add packages here
-//     }
-//   });
+//     System.config({
+//         packages: {
+//             'app'
+//         }
+//     });
 // })(this);
