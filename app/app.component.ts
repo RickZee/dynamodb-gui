@@ -1,7 +1,27 @@
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+
+import { DynamoDbService } from './app.dynamodb.service';
 
 @Component({
     selector: 'main-app',
-    template: '<h1>Dynamo DB GUI</h1>'
+    templateUrl: 'app.entryComponents.html',
+    providers: [DynamoDbService]
 })
-export class AppComponent { }
+export class AppComponent implements OnInit {
+    tables: any[];
+    error: any;
+
+    constructor(private dynamoDbService: DynamoDbService) { }
+
+    ngOnInit(): void {
+        this.getTables();
+    }
+
+    getTables(): void {
+        this.dynamoDbService
+            .getTables()
+            .then(tables => this.tables = tables)
+            .catch(error => this.error = error);
+    }
+}
