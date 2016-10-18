@@ -65,6 +65,10 @@ a.github-link:hover {
   width: 100%;
 }
 
+.pure-table tr:hover {
+  background-color: #e5e7ff;
+}
+
 .content {
   padding-top: 40px;
 }

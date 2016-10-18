@@ -26,51 +26,19 @@
             <tr>
                 <th>Name</th>
                 <th>Items</th>
+                <th>Attributes</th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let table of tables">
                 <td>{{table.name}}</td>
-                <td>{{table.itemCount}}</td>
+                <td>{{table.definition?table.definition.Table.ItemCount:''}}</td>
+                <td>{{table.definition?table.definition.Table.AttributeDefinitions.length:''}}</td>
             </tr>
         </tbody>
     </table>
 </div>
-<!--
-<md-grid-list cols="{{columns}}">
-    <md-grid-tile *ngFor="let table of tables">
-        <md-card>
-            <md-card-content>
-                <h3>{{table.name}}</h3>
-            </md-card-content>
-            <md-card-content>
-                <p>Items: {{table.itemCount}}</p>
-            </md-card-content>
-            <md-card-actions>
-                <button md-button>DATA</button>
-                <button md-button>DESIGN</button>
-            </md-card-actions>
-        </md-card>
-    </md-grid-tile>
-</md-grid-list>-->
-
-<!--
-<button md-raised-button color="primary">PRIMARY</button>
-<button md-raised-button color="accent">ACCENT</button>
-<button md-raised-button color="warn">WARN</button>
-
-<button md-button>FLAT</button>
-<button md-raised-button>RAISED</button>
-<button md-icon-button>
-    <md-icon class="md-24">favorite</md-icon>
-</button>
-<button md-fab>
-    <md-icon class="md-24">add</md-icon>
-</button>
-<button md-mini-fab>
-    <md-icon class="md-24">add</md-icon>
-</button>-->
 
 <footer>
     <a href="https://github.com/rickzee/dynamodb-gui" target="_blank" class="github-link">

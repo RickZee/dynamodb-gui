@@ -19,9 +19,9 @@ export class DynamoDbService {
     constructor(private http: Http) { }
 
     getTablesNames(): Promise<any[]> {
-        console.debug('Getting list of tables');
+        // console.debug('Getting list of tables');
 
-        return this.createRequest({})
+        return this.createRequest({}, 'ListTables')
             .toPromise()
             .then((res) => {
                 let names = res.TableNames as string[];
@@ -30,6 +30,18 @@ export class DynamoDbService {
             .catch(this.handleError);
     }
 
+    getTableDescription(table: any): Promise<any[]> {
+        console.debug('Getting description of table ' + table.name);
+
+        return this.createRequest({TableName: table.name}, 'DescribeTable')
+            .toPromise()
+            .then((res) => {
+                table.definition = res;
+                return table;
+            })
+            .catch(this.handleError);
+    }
+    
     search(term: string): Observable<any[]> {
         return this.http
             .get(this._apiUrl + `list-tables`)
@@ -41,13 +53,13 @@ export class DynamoDbService {
         return Promise.reject(error.message || error);
     }
 
-    private createRequest(body: any): Observable<any> {
+    private createRequest(body: any, action: string): Observable<any> {
         let bodyString = JSON.stringify(body);
         let headers = new Headers();
         headers.append('Authorization', 'AWS4-HMAC-SHA256 Credential=cUniqueSessionID/20161018/us-west-2/dynamodb/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-target;x-amz-user-agent, Signature=ec7a90f570d83862d638054c09cad1dc123b75f049744998f4b63b3c240c7813');
         headers.append('Content-Type', 'application/x-amz-json-1.0');
         headers.append('X-Amz-Content-Sha256', '44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a');
-        headers.append('X-Amz-Target', 'DynamoDB_20120810.ListTables');
+        headers.append('X-Amz-Target', 'DynamoDB_20120810.' + action);
         headers.append('X-Amz-User-Agent', 'aws-sdk-js/2.2.4');
 
         let options = new RequestOptions({ headers: headers });

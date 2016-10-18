@@ -22,7 +22,19 @@ export class AppComponent implements OnInit {
     getTables(): void {
         this.dynamoDbService
             .getTablesNames()
-            .then(tables => this.tables = tables)
+            .then(tables => {this.tables = tables; this.loadTableDescriptions(tables);})
+            .then()
             .catch(error => this.error = error);
     }
+
+    private loadTableDescriptions(tables: any[]) : any[] {
+        for (let i = 0; i < tables.length; i++) {
+            let table = tables[i];
+            this.dynamoDbService
+                .getTableDescription(table)
+                .then((t: any) => t.isLoaded = true)
+                .catch(error => this.error = error);
+        }
+        return tables;
+    } 
 }
