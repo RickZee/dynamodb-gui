@@ -44,7 +44,7 @@ footer {
 }
 
 .github-text {
-  padding-left: 4px;
+  margin-left: 4px;
 }
 
 .github-link {
@@ -53,4 +53,9 @@ footer {
 
 a.github-link {
   text-decoration: none;
+  color: inherit;
+}
+
+a.github-link:hover {
+  text-decoration: underline;
 }

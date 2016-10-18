@@ -4,16 +4,11 @@
     <span class="example-fill-remaining-space"></span>
 
     <div class="horizontal-menu-item">
-        <button md-mini-fab color="accent">
+        <button md-mini-fab color="accent" md-tooltip="Refresh" tooltip-position="below" (click)="getTables()">
             <i class="material-icons">autorenew</i>
         </button>
     </div>
 
-    <div class="horizontal-menu-item">
-        <button md-mini-fab color="accent">
-            <i class="material-icons">code</i>
-        </button>
-    </div>
 </md-toolbar>
 
 <!--
@@ -59,6 +54,6 @@
 
 <footer>
     <a href="https://github.com/rickzee/dynamodb-gui" target="_blank" class="github-link">
-        <img src="../img/GitHub-Mark-32px.png" alt="View code in Github" class="github-icon"><span class="github-text"> View on Github</span>
+        <img src="../img/GitHub-Mark-32px.png" alt="View code in Github" class="github-icon"><span class="github-text">View on Github</span>
     </a>
 </footer>

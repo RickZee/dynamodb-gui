@@ -18,6 +18,7 @@ export class DynamoDbService {
     constructor(private http: Http) { }
 
     getTables(): Promise<any[]> {
+        console.debug('Getting list of tables');
         return Observable.from<any>(this._tables)
             .toPromise()
             .then(() => this._tables)
