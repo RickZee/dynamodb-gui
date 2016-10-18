@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
+import { TableListComponent } from './table-list.component';
 import { TableDetailsComponent } from './table-details.component';
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: '/',
-    component: AppComponent
+    component: TableListComponent
   },
   {
     path: 'detail/:name',
@@ -26,4 +26,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routedComponents = [AppComponent, TableDetailsComponent];
+export const routedComponents = [TableListComponent, TableDetailsComponent];

@@ -1,44 +1,16 @@
 <md-toolbar color="primary">
-    <span>Dynamo DB GUI</span>
+    <span>{{title}}</span>
 
     <span class="example-fill-remaining-space"></span>
 
     <div class="horizontal-menu-item">
-        <button md-mini-fab color="accent" md-tooltip="Refresh" tooltip-position="below" (click)="getTables()">
+        <button md-mini-fab color="accent" md-tooltip="Refresh" tooltip-position="below" (click)="refresh()">
             <i class="material-icons">autorenew</i>
         </button>
     </div>
-
 </md-toolbar>
 
-<!--
-<p *ngFor="let tableRow of tables">
-    <p *ngFor="let table of tableRow">
-        {{table}}
-    </p>
-</p>-->
-
-<!--{{tables}}-->
-
-<div class="content">
-    <table class="pure-table pure-table-horizontal">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Items</th>
-                <th>Attributes</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr *ngFor="let table of tables"(click)="gotoDetail(table)">
-                <td>{{table.name}}</td>
-                <td>{{table.definition?table.definition.Table.ItemCount:''}}</td>
-                <td>{{table.definition?table.definition.Table.AttributeDefinitions.length:''}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<router-outlet></router-outlet>
 
 <footer>
     <a href="https://github.com/rickzee/dynamodb-gui" target="_blank" class="github-link">

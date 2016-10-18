@@ -6,7 +6,7 @@ import { DynamoDbService } from './app.dynamodb.service';
 @Component({
   moduleId: module.id,
   selector: 'table-detail',
-  templateUrl: 'table-detail.component.html'
+  templateUrl: 'table-details.component.html'
 })
 export class TableDetailsComponent implements OnInit {
   @Input() items: any[];
