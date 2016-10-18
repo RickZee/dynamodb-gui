@@ -7,15 +7,15 @@ import { TableDetailsComponent } from './table-details.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/',
+    redirectTo: '/tables',
     pathMatch: 'full'
   },
   {
-    path: '/',
+    path: '/tables',
     component: TableListComponent
   },
   {
-    path: 'detail/:name',
+    path: 'table/:name',
     component: TableDetailsComponent
   }
 ];

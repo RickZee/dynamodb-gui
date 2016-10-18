@@ -33,7 +33,7 @@ export class TableListComponent implements OnInit {
     }
 
     gotoDetail(table: any): void {
-        let link = ['/detail', table.name];
+        let link = ['/table', table.name];
         this.router.navigate(link);
     }
 
