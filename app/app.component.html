@@ -20,10 +20,30 @@
 
 <!--{{tables}}-->
 
+<div class="content">
+    <table class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Items</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let table of tables">
+                <td>{{table.name}}</td>
+                <td>{{table.itemCount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--
 <md-grid-list cols="{{columns}}">
     <md-grid-tile *ngFor="let table of tables">
         <md-card>
-            <md-card-content><h3>{{table.name}}</h3></md-card-content>
+            <md-card-content>
+                <h3>{{table.name}}</h3>
+            </md-card-content>
             <md-card-content>
                 <p>Items: {{table.itemCount}}</p>
             </md-card-content>
@@ -33,7 +53,7 @@
             </md-card-actions>
         </md-card>
     </md-grid-tile>
-</md-grid-list>
+</md-grid-list>-->
 
 <!--
 <button md-raised-button color="primary">PRIMARY</button>

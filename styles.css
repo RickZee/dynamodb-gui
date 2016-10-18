@@ -34,6 +34,7 @@ a {
 }
 
 footer {
+  margin-top: 40px;
   text-align: center;
   font-size: x-small;
 }
@@ -58,4 +59,12 @@ a.github-link {
 
 a.github-link:hover {
   text-decoration: underline;
+}
+
+.pure-table {
+  width: 100%;
+}
+
+.content {
+  padding-top: 40px;
 }

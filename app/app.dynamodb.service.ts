@@ -23,16 +23,11 @@ export class DynamoDbService {
 
         return this.createRequest({})
             .toPromise()
-            .then((res) => res.TableNames as string[])
-            .then((names) => {
+            .then((res) => {
+                let names = res.TableNames as string[];
                 return names.map((n) => {return {'name': n}; } );
             })
             .catch(this.handleError);
-
-        // return Observable.from<any>(this._tables)
-        //     .toPromise()
-        //     .then(() => this._tables)
-        //     .catch(this.handleError);
     }
 
     search(term: string): Observable<any[]> {
