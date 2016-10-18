@@ -32,3 +32,25 @@ a {
 .horizontal-menu-item {
   margin: 6px;
 }
+
+footer {
+  text-align: center;
+  font-size: x-small;
+}
+
+.github-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.github-text {
+  padding-left: 4px;
+}
+
+.github-link {
+  vertical-align: middle;
+}
+
+a.github-link {
+  text-decoration: none;
+}
