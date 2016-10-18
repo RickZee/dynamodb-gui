@@ -16,60 +16,21 @@
     </div>
 </md-toolbar>
 
-<md-grid-list cols="4">
-    <md-grid-tile>
+<!--
+<p *ngFor="let tableRow of tables">
+    <p *ngFor="let table of tableRow">
+        {{table}}
+    </p>
+</p>-->
+
+<!--{{tables}}-->
+
+<md-grid-list cols="{{columns}}">
+    <md-grid-tile *ngFor="let table of tables">
         <md-card>
-            <md-card-subtitle>Subtitle first</md-card-subtitle>
-            <md-card-title>Card with title</md-card-title>
+            <md-card-title>{{table.name}}</md-card-title>
             <md-card-content>
-                <p>This is supporting text.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad</p>
-            </md-card-content>
-            <md-card-actions>
-                <button md-button>DATA</button>
-                <button md-button>DESIGN</button>
-            </md-card-actions>
-        </md-card>
-    </md-grid-tile>
-    <md-grid-tile>
-        <md-card>
-            <md-card-subtitle>Subtitle first</md-card-subtitle>
-            <md-card-title>Card with title</md-card-title>
-            <md-card-content>
-                <p>This is supporting text.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad</p>
-            </md-card-content>
-            <md-card-actions>
-                <button md-button>DATA</button>
-                <button md-button>DESIGN</button>
-            </md-card-actions>
-        </md-card>
-    </md-grid-tile>
-    <md-grid-tile>
-        <md-card>
-            <md-card-subtitle>Subtitle first</md-card-subtitle>
-            <md-card-title>Card with title</md-card-title>
-            <md-card-content>
-                <p>This is supporting text.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad</p>
-            </md-card-content>
-            <md-card-actions>
-                <button md-button>DATA</button>
-                <button md-button>DESIGN</button>
-            </md-card-actions>
-        </md-card>
-    </md-grid-tile>
-    <md-grid-tile>
-        <md-card>
-            <md-card-subtitle>Subtitle first</md-card-subtitle>
-            <md-card-title>Card with title</md-card-title>
-            <md-card-content>
-                <p>This is supporting text.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad</p>
+                <p>Items: {{table.itemCount}}</p>
             </md-card-content>
             <md-card-actions>
                 <button md-button>DATA</button>
@@ -78,6 +39,7 @@
         </md-card>
     </md-grid-tile>
 </md-grid-list>
+
 <!--
 <button md-raised-button color="primary">PRIMARY</button>
 <button md-raised-button color="accent">ACCENT</button>

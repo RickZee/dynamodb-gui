@@ -11,6 +11,7 @@ import { DynamoDbService } from './app.dynamodb.service';
 export class AppComponent implements OnInit {
     tables: any[];
     error: any;
+    columns: number = 4;
 
     constructor(private dynamoDbService: DynamoDbService) { }
 
