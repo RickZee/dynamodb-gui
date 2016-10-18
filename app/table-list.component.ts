@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -33,7 +32,7 @@ export class TableListComponent implements OnInit {
     }
 
     gotoDetail(table: any): void {
-        let link = ['/table', table.name];
+        let link = ['table', table.name];
         this.router.navigate(link);
     }
 

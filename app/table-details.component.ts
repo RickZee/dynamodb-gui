@@ -6,7 +6,8 @@ import { DynamoDbService } from './app.dynamodb.service';
 @Component({
   moduleId: module.id,
   selector: 'table-detail',
-  templateUrl: 'table-details.component.html'
+  templateUrl: 'table-details.component.html',
+  providers: [DynamoDbService]
 })
 export class TableDetailsComponent implements OnInit {
   @Input() items: any[];
@@ -23,7 +24,7 @@ export class TableDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['name'] !== undefined) {
-        let name = +params['name'];
+        let name = params['name'];
         this.navigated = true;
         let table = { name: name };
 
@@ -31,7 +32,7 @@ export class TableDetailsComponent implements OnInit {
           .then((table: any) => {
             this.table = table;
             this.dynamoDbService.getTableItems(table.name)
-              .then((items: any) => this.items = items);
+              .then((items: any) => {console.log(items.Items); this.items = items.Items});
           });
 
       } else {

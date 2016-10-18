@@ -1,14 +1,18 @@
+{{table}}
+
+{{items}}
+
 <!--<div class="content">
     <table class="pure-table pure-table-horizontal">
         <thead>
             <tr>
-                <th  *ngFor="let attr of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</th>
+                <th *ngFor="let attr of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</th>
             </tr>
         </thead>
 
         <tbody>
             <tr  *ngFor="let attr of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}
-                <td  *ngFor="let itemValÒ of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</td>
+                <td *ngFor="let itemValÒ of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</td>
             </tr>
 
             <tr *ngFor="let table of tables"(click)="gotoDetail(table)">

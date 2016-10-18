@@ -9,7 +9,7 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let table of tables"(click)="gotoDetail(table)">
+            <tr *ngFor="let table of tables" (click)="gotoDetail(table)" class="table-link">
                 <td>{{table.name}}</td>
                 <td>{{table.definition?table.definition.Table.ItemCount:''}}</td>
                 <td>{{table.definition?table.definition.Table.AttributeDefinitions.length:''}}</td>
