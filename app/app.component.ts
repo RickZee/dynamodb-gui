@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { DynamoDbService } from './app.dynamodb.service';
 
@@ -13,7 +14,10 @@ export class AppComponent implements OnInit {
     error: any;
     columns: number = 3;
 
-    constructor(private dynamoDbService: DynamoDbService) { }
+    constructor(
+        private dynamoDbService: DynamoDbService,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
         this.getTables();
@@ -22,12 +26,17 @@ export class AppComponent implements OnInit {
     getTables(): void {
         this.dynamoDbService
             .getTablesNames()
-            .then(tables => {this.tables = tables; this.loadTableDescriptions(tables);})
+            .then(tables => { this.tables = tables; this.loadTableDescriptions(tables); })
             .then()
             .catch(error => this.error = error);
     }
 
-    private loadTableDescriptions(tables: any[]) : any[] {
+    gotoDetail(table: any): void {
+        let link = ['/detail', table.name];
+        this.router.navigate(link);
+    }
+
+    private loadTableDescriptions(tables: any[]): any[] {
         for (let i = 0; i < tables.length; i++) {
             let table = tables[i];
             this.dynamoDbService
@@ -36,5 +45,5 @@ export class AppComponent implements OnInit {
                 .catch(error => this.error = error);
         }
         return tables;
-    } 
+    }
 }

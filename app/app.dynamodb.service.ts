@@ -42,6 +42,15 @@ export class DynamoDbService {
             .catch(this.handleError);
     }
     
+    getTableItems(tableName: string): Promise<any[]> {
+        console.debug('Getting items for table ' + tableName);
+
+        return this.createRequest({TableName: tableName}, 'Scan')
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     search(term: string): Observable<any[]> {
         return this.http
             .get(this._apiUrl + `list-tables`)
