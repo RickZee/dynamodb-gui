@@ -23,7 +23,7 @@
 <md-grid-list cols="{{columns}}">
     <md-grid-tile *ngFor="let table of tables">
         <md-card>
-            <md-card-title>{{table.name}}</md-card-title>
+            <md-card-content><h3>{{table.name}}</h3></md-card-content>
             <md-card-content>
                 <p>Items: {{table.itemCount}}</p>
             </md-card-content>

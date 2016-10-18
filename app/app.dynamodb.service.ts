@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class DynamoDbService {
-    private _apiUrl = 'localhost/8000';
+    private _apiUrl = 'http://localhost:8000';
 
     private _tables: any[] = [
         { 'name': 'table1', 'itemCount': '10' },
@@ -16,33 +16,29 @@ export class DynamoDbService {
         { 'name': 'table5', 'itemCount': '1' }
     ];
 
-    constructor(private http: Http) {
-        this.initDynamoDb();
-    }
+    constructor(private http: Http) { }
 
-    getTables(): Promise<any[]> {
+    getTablesNames(): Promise<any[]> {
         console.debug('Getting list of tables');
 
-        return Observable.from<any>(this._tables)
+        return this.createRequest({})
             .toPromise()
-            .then(() => this._tables)
+            .then((res) => res.TableNames as string[])
+            .then((names) => {
+                return names.map((n) => {return {'name': n}; } );
+            })
             .catch(this.handleError);
+
+        // return Observable.from<any>(this._tables)
+        //     .toPromise()
+        //     .then(() => this._tables)
+        //     .catch(this.handleError);
     }
 
     search(term: string): Observable<any[]> {
         return this.http
             .get(this._apiUrl + `list-tables`)
             .map((r: Response) => r.json().data as any[]);
-    }
-
-    private initDynamoDb() {
-        this.createRequest({}).subscribe(s=>console.log(s));
-        // AWS.config.region = "us-east-1";
-        // AWS.config.apiVersions = {
-        //     dynamodb: '2012-08-10',
-        // };
-
-        // var dynamodb = new AWS.DynamoDB();
     }
 
     private handleError(error: any): Promise<any> {
@@ -62,23 +58,7 @@ export class DynamoDbService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this._apiUrl, bodyString, options)
-            .map((res: Response) => {console.log(res.json()); res.json()})
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-
-        // Authorization:AWS4-HMAC-SHA256 Credential=cUniqueSessionID/20161018/us-west-2/dynamodb/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-target;x-amz-user-agent, Signature=ec7a90f570d83862d638054c09cad1dc123b75f049744998f4b63b3c240c7813
-        // Content-Type:application/x-amz-json-1.0
-        // X-Amz-Content-Sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
-        // X-Amz-Target:DynamoDB_20120810.ListTables
-        // X-Amz-User-Agent:aws-sdk-js/2.2.4
-
-
-        // {
-        //     "TableName": "Pets",
-        //     "Key": {
-        //         "AnimalType": {"S": "Dog"},
-        //         "Name": {"S": "Fido"}
-        //     }
-        // }
-
+            .map((res: Response) => {console.log(res.json()); return res.json(); })
+            .catch(this.handleError);
     }
 }
