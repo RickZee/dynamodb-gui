@@ -28,3 +28,7 @@ a {
 .example-fill-remaining-space {
   flex: 1 1 auto;
 }
+
+.horizontal-menu-item {
+  margin: 6px;
+}
