@@ -9,7 +9,8 @@ import { DynamoDbService } from './app.dynamodb.service';
   templateUrl: 'table-detail.component.html'
 })
 export class TableDetailsComponent implements OnInit {
-  @Input() tableDetails: any;
+  @Input() items: any[];
+  @Input() table: any;
   @Output() close = new EventEmitter();
   error: any;
   navigated = false; // true if navigated here
@@ -24,11 +25,18 @@ export class TableDetailsComponent implements OnInit {
       if (params['name'] !== undefined) {
         let name = +params['name'];
         this.navigated = true;
-        this.dynamoDbService.getTableItems(name)
-          .then((tableDetails: any) => this.tableDetails = tableDetails);
+        let table = { name: name };
+
+        this.dynamoDbService.getTableDescription(table)
+          .then((table: any) => {
+            this.table = table;
+            this.dynamoDbService.getTableItems(table.name)
+              .then((items: any) => this.items = items);
+          });
+
       } else {
         this.navigated = false;
-        this.tableDetails = {};
+        this.items = [];
       }
     });
   }

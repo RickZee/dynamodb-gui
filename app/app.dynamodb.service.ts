@@ -31,7 +31,7 @@ export class DynamoDbService {
     }
 
     getTableDescription(table: any): Promise<any[]> {
-        console.debug('Getting description of table ' + table.name);
+        // console.debug('Getting description of table ' + table.name);
 
         return this.createRequest({TableName: table.name}, 'DescribeTable')
             .toPromise()
@@ -43,18 +43,12 @@ export class DynamoDbService {
     }
     
     getTableItems(tableName: string): Promise<any[]> {
-        console.debug('Getting items for table ' + tableName);
+        // console.debug('Getting items for table ' + tableName);
 
         return this.createRequest({TableName: tableName}, 'Scan')
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
-    }
-
-    search(term: string): Observable<any[]> {
-        return this.http
-            .get(this._apiUrl + `list-tables`)
-            .map((r: Response) => r.json().data as any[]);
     }
 
     private handleError(error: any): Promise<any> {
