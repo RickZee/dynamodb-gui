@@ -1,25 +1,8 @@
-{{table}}
 
-{{items}}
+<button md-mini-fab color="accent" md-tooltip="Back to list" tooltip-position="below" (click)="goBack()">
+    <i class="material-icons">keyboard_backspace</i>
+</button>
 
-<!--<div class="content">
-    <table class="pure-table pure-table-horizontal">
-        <thead>
-            <tr>
-                <th *ngFor="let attr of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr  *ngFor="let attr of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}
-                <td *ngFor="let itemValÒ of table.definition?table.definition.Table.AttributeDefinitions">{{attr}}</td>
-            </tr>
-
-            <tr *ngFor="let table of tables"(click)="gotoDetail(table)">
-                <td>{{table.name}}</td>
-                <td>{{table.definition?table.definition.Table.ItemCount:''}}</td>
-                <td>{{table.definition?table.definition.Table.AttributeDefinitions.length:''}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>-->
+<p *ngFor="let item of items">
+    {{item | json}}
+</p>
