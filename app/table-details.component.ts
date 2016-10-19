@@ -56,22 +56,47 @@ export class TableDetailsComponent implements OnInit {
   }
 
   private transformItems(items: any[]): any {
+    let names: string[] = [];
+    let rows: any[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+      let item = items[i];
+      let row: any[] = [];
+
+      for (let key in item) {
+        if (item.hasOwnProperty(key)) {
+          let index = names.indexOf(key);
+
+          if (index < 0) {
+            names.push(key);
+            index = names.length - 1;
+          }
+
+          let value = item[key];
+          if (value) {
+            for (let prop in value) {
+              if (value.hasOwnProperty(prop)) {
+                row[index] = value[prop];
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      rows.push(row);
+    }
+
+    for (let i = 0; i < rows.length; i++) {
+      let row = rows[i];
+      if (row.length < names.length) {
+        row[names.length - 1] = undefined;
+      }
+    }
+
     return {
-      attributeNames: ['attr1', 'attr2'],
-      rows: [
-        [
-          { name: 'attr1', value: 'val1' },
-          { name: 'attr1', value: 'val1' }
-        ],
-        [
-          { name: 'attr1', value: 'val1' },
-          { name: 'attr1', value: 'val1' }
-        ],
-        [
-          { name: 'attr1', value: 'val1' },
-          { name: 'attr1', value: 'val1' }
-        ]
-      ]
+      attributeNames: names,
+      rows: rows
     };
   }
 }

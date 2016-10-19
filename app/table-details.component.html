@@ -1,22 +1,17 @@
-<button md-mini-fab color="accent" md-tooltip="Back to table list" tooltip-position="below" (click)="goBack()">
-    <i class="material-icons">keyboard_backspace</i>
-</button>
-
-<!--{{table | json}}-->
-
-<p *ngIf="!hasItems" class="panel-info">
-	"{{tableName}}" table has no items
-</p>
-
-<!--<div *ngFor="let item of items">
-	<div *ngFor="let attr of item | values">
-		{{attr.key | json}}
-		<br> {{attr.value | json}}
-	</div>
-</div>-->
+<div class="push-down-40px table-actions">
+	<button md-mini-fab color="accent" (click)="goBack()">
+        <i class="material-icons">keyboard_backspace</i>
+    </button>
+</div>
 
 <div class="content">
-	<table class="pure-table pure-table-horizontal">
+    <h2>{{tableName}}</h2>
+    
+    <p *ngIf="!hasItems" class="panel-info">
+        Table has no items
+    </p>
+
+	<table class="pure-table pure-table-horizontal result-table">
 		<thead>
 			<tr>
 				<th *ngFor="let attrName of attributeNames">{{attrName}}</th>
@@ -25,7 +20,7 @@
 
 		<tbody>
 			<tr *ngFor="let row of rows">
-				<td *ngFor="let attr of row">{{attr.value}}</td>
+				<td *ngFor="let attr of row">{{attr}}</td>
 			</tr>
 		</tbody>
 	</table>

@@ -70,7 +70,11 @@ a.github-link:hover {
 }
 
 .content {
-  padding-top: 40px;
+  margin-top: 40px;
+}
+
+.result-table {
+  font-size: smaller;
 }
 
 .table-link {
@@ -79,5 +83,8 @@ a.github-link:hover {
 
 .panel-info {
   color: green;
-  text-align: center;
+}
+
+.push-down-40px {
+  margin-top: 40px;
 }
