@@ -18,6 +18,7 @@ export class TableDetailsComponent implements OnInit {
   navigated = false; // true if navigated here
   attributeNames: string[] = [];
   rows: any[] = [];
+  viewType: string = 'view-table';
 
   constructor(
     private dynamoDbService: DynamoDbService,
@@ -51,12 +52,18 @@ export class TableDetailsComponent implements OnInit {
     });
   }
 
+  changeViewType(evt: any): any {
+    if (evt) {
+      this.viewType = evt.value;
+    }
+  }
+
   goBack(): void {
     if (this.navigated) { window.history.back(); }
   }
 
   isObject(value: any): boolean {
-    return typeof value === 'object'; 
+    return typeof value === 'object';
   }
 
   private transformItems(items: any[]): any {

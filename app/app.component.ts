@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
     templateUrl: 'app/app.component.html'
 })
 export class AppComponent  {
-    title = 'Dynamo DB Management GUI';
+    title = 'Dynamo DB GUI';
 }

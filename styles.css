@@ -92,3 +92,12 @@ a.github-link:hover {
 .push-down-40px {
   margin-top: 40px;
 }
+
+.action-control.first {
+  float: left;
+}
+
+.action-control.next {
+    padding-top: 2px;
+    margin-left: 60px;
+}
