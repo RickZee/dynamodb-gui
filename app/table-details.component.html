@@ -2,19 +2,31 @@
     <i class="material-icons">keyboard_backspace</i>
 </button>
 
+<!--{{table | json}}-->
+
 <p *ngIf="!hasItems" class="panel-info">
-    "{{tableName}}" table has no items
+	"{{tableName}}" table has no items
 </p>
 
-<div *ngFor="let item of items">
-    <!--{{item | json}}-->
+<!--<div *ngFor="let item of items">
+	<div *ngFor="let attr of item | values">
+		{{attr.key | json}}
+		<br> {{attr.value | json}}
+	</div>
+</div>-->
 
-    <div *ngFor="let attr of item | values">
-        <!--{{attr | json}}-->
+<div class="content">
+	<table class="pure-table pure-table-horizontal">
+		<thead>
+			<tr>
+				<th *ngFor="let attrName of attributeNames">{{attrName}}</th>
+			</tr>
+		</thead>
 
-        {{attr.key | json}}
-        <br>
-        {{attr.value | json}}
-    </div>
+		<tbody>
+			<tr *ngFor="let row of rows">
+				<td *ngFor="let attr of row">{{attr.value}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-

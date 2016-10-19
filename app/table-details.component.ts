@@ -17,6 +17,18 @@ export class TableDetailsComponent implements OnInit {
   hasItems: boolean;
   navigated = false; // true if navigated here
 
+  attributeNames: string[] = ['attr1', 'attr2'];
+  rows: any[] = [
+    [
+      {name:'attr1', value: 'val1'},
+      {name:'attr1', value: 'val1'}
+    ],
+    [
+      {name:'attr1', value: 'val1'},
+      {name:'attr1', value: 'val1'}
+    ]
+  ];
+
   constructor(
     private dynamoDbService: DynamoDbService,
     private route: ActivatedRoute) {
