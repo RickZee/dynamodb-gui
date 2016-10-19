@@ -14,6 +14,8 @@ export class TableDetailsComponent implements OnInit {
   @Input() table: any;
   @Output() close = new EventEmitter();
   error: any;
+  tableName: string;
+  hasItems: boolean;
   navigated = false; // true if navigated here
 
   constructor(
@@ -24,15 +26,18 @@ export class TableDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['name'] !== undefined) {
-        let name = params['name'];
+        this.tableName = params['name'];
         this.navigated = true;
-        let table = { name: name };
+        let table = { name: this.tableName };
 
         this.dynamoDbService.getTableDescription(table)
           .then((table: any) => {
             this.table = table;
             this.dynamoDbService.getTableItems(table.name)
-              .then((items: any) => {console.log(items.Items); this.items = items.Items});
+              .then((items: any) => {
+                this.items = items.Items;
+                this.hasItems = this.items.length > 0;
+              });
           });
 
       } else {

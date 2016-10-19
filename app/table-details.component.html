@@ -3,6 +3,10 @@
     <i class="material-icons">keyboard_backspace</i>
 </button>
 
+<p *ngIf="!hasItems" class="panel-info">
+    "{{tableName}}" table has no items
+</p>
+
 <p *ngFor="let item of items">
     {{item | json}}
 </p>

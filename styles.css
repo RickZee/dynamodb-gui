@@ -76,3 +76,8 @@ a.github-link:hover {
 .table-link {
   cursor: pointer;
 }
+
+.panel-info {
+  color: green;
+  text-align: center;
+}
