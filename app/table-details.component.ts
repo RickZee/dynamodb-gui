@@ -16,18 +16,8 @@ export class TableDetailsComponent implements OnInit {
   tableName: string;
   hasItems: boolean;
   navigated = false; // true if navigated here
-
-  attributeNames: string[] = ['attr1', 'attr2'];
-  rows: any[] = [
-    [
-      {name:'attr1', value: 'val1'},
-      {name:'attr1', value: 'val1'}
-    ],
-    [
-      {name:'attr1', value: 'val1'},
-      {name:'attr1', value: 'val1'}
-    ]
-  ];
+  attributeNames: string[] = [];
+  rows: any[] = [];
 
   constructor(
     private dynamoDbService: DynamoDbService,
@@ -48,6 +38,9 @@ export class TableDetailsComponent implements OnInit {
               .then((items: any) => {
                 this.items = items.Items;
                 this.hasItems = this.items.length > 0;
+                let transformed = this.transformItems(this.items);
+                this.rows = transformed.rows;
+                this.attributeNames = transformed.attributeNames;
               });
           });
 
@@ -60,5 +53,25 @@ export class TableDetailsComponent implements OnInit {
 
   goBack(): void {
     if (this.navigated) { window.history.back(); }
+  }
+
+  private transformItems(items: any[]): any {
+    return {
+      attributeNames: ['attr1', 'attr2'],
+      rows: [
+        [
+          { name: 'attr1', value: 'val1' },
+          { name: 'attr1', value: 'val1' }
+        ],
+        [
+          { name: 'attr1', value: 'val1' },
+          { name: 'attr1', value: 'val1' }
+        ],
+        [
+          { name: 'attr1', value: 'val1' },
+          { name: 'attr1', value: 'val1' }
+        ]
+      ]
+    };
   }
 }
