@@ -18,7 +18,7 @@ export class TableDetailsComponent implements OnInit {
   navigated = false; // true if navigated here
   attributeNames: string[] = [];
   rows: any[] = [];
-  viewType: string = 'view-table';
+  viewType: string = 'view-panel';
 
   constructor(
     private dynamoDbService: DynamoDbService,
