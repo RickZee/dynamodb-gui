@@ -1,5 +1,4 @@
-
-<button md-mini-fab color="accent" md-tooltip="Back to list" tooltip-position="below" (click)="goBack()">
+<button md-mini-fab color="accent" md-tooltip="Back to table list" tooltip-position="below" (click)="goBack()">
     <i class="material-icons">keyboard_backspace</i>
 </button>
 
@@ -7,6 +6,15 @@
     "{{tableName}}" table has no items
 </p>
 
-<p *ngFor="let item of items">
-    {{item | json}}
-</p>
+<div *ngFor="let item of items">
+    <!--{{item | json}}-->
+
+    <div *ngFor="let attr of item | values">
+        <!--{{attr | json}}-->
+
+        {{attr.key | json}}
+        <br>
+        {{attr.value | json}}
+    </div>
+</div>
+

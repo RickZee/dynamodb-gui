@@ -10,9 +10,8 @@ import { DynamoDbService } from './app.dynamodb.service';
   providers: [DynamoDbService]
 })
 export class TableDetailsComponent implements OnInit {
-  @Input() items: any[];
-  @Input() table: any;
-  @Output() close = new EventEmitter();
+  items: any[];
+  table: any;
   error: any;
   tableName: string;
   hasItems: boolean;
@@ -48,7 +47,6 @@ export class TableDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.close.emit();
     if (this.navigated) { window.history.back(); }
   }
 }
