@@ -20,7 +20,10 @@
 
 		<tbody>
 			<tr *ngFor="let row of rows">
-				<td *ngFor="let attr of row">{{attr}}</td>
+				<td *ngFor="let attr of row">
+                    <span *ngIf="isObject(attr)">{{attr | json}}</span>
+                    <span *ngIf="!isObject(attr)">{{attr}}</span>
+                </td>
 			</tr>
 		</tbody>
 	</table>

@@ -77,6 +77,10 @@ a.github-link:hover {
   font-size: smaller;
 }
 
+.result-table td {
+  vertical-align: top;
+}
+
 .table-link {
   cursor: pointer;
 }

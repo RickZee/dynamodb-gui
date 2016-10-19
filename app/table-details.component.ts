@@ -55,6 +55,10 @@ export class TableDetailsComponent implements OnInit {
     if (this.navigated) { window.history.back(); }
   }
 
+  isObject(value: any): boolean {
+    return typeof value === 'object'; 
+  }
+
   private transformItems(items: any[]): any {
     let names: string[] = [];
     let rows: any[] = [];
