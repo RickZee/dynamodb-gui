@@ -41,8 +41,8 @@ export class DynamoDbService {
             })
             .catch(this.handleError);
     }
-    
-    getTableItems(tableName: string): Promise<any[]> {
+
+    getTableItems(tableName: string, searchTerm: string): Promise<any[]> {
         // console.debug('Getting items for table ' + tableName);
 
         return this.createRequest({TableName: tableName}, 'Scan')

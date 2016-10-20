@@ -11,6 +11,11 @@
 			<md-button-toggle value="view-panel">Panel View</md-button-toggle>
 		</md-button-toggle-group>
 	</div>
+
+	<div class="action-control next">
+		<input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+	</div>
+
 </div>
 
 <div class="content">
@@ -23,12 +28,12 @@
 	<table *ngIf="viewType==='view-table'" class="pure-table pure-table-horizontal result-table">
 		<thead>
 			<tr>
-				<th *ngFor="let attrName of attributeNames">{{attrName}}</th>
+				<th *ngFor="let attrName of attributeNames | async">{{attrName}}</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr *ngFor="let row of rows">
+			<tr *ngFor="let row of rows | async">
 				<td *ngFor="let attr of row">
 					<span *ngIf="isObject(attr)">{{attr | json}}</span>
 					<span *ngIf="!isObject(attr)">{{attr}}</span>
@@ -38,15 +43,15 @@
 	</table>
 
 	<div *ngIf="viewType==='view-panel'">
-		<dl *ngFor="let row of rows" class="result-panel">
+		<dl *ngFor="let row of rows | async" class="result-panel">
 
 			<ng-container *ngFor="let attrName of attributeNames; let i = index">
 				<dt>
-					<span *ngIf="!attrName" class="null-value">-</span>					
-					<span *ngIf="attrName">{{attrName}}</span>					
+					<span *ngIf="!attrName" class="null-value">-</span>
+					<span *ngIf="attrName">{{attrName}}</span>
 				</dt>
 				<dd>
-					<span *ngIf="!row[i]" class="null-value">-</span>					
+					<span *ngIf="!row[i]" class="null-value">-</span>
 					<span *ngIf="row[i] && isObject(row[i])">{{row[i] | json}}</span>
 					<span *ngIf="row[i] && !isObject(row[i])">{{row[i]}}</span>
 				</dd>
