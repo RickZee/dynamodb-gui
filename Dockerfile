@@ -1,7 +1,7 @@
 # To build and run with Docker:
 #
-#  $ docker build -t ng-dynamodb-gui .
-#  $ docker run -it --rm -p 3000:3000 -p 3001:3001 ng-dynamodb-gui
+#  $ docker build -t dynamodb-gui .
+#  $ docker run -it --rm -p 3000:3000 -p 3001:3001 dynamodb-gui
 #
 FROM node:latest
 
