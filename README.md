@@ -2,15 +2,15 @@
 
 *Please Note: this is a __very__ work in progress.* 
 
-## Purpose ## 
+## Purpose
 To provide a simple GUI to view, and in the future manage, your local Dynamo DB instance.
 Currectly uses the default port 8000 to connect to local Dynamo DB.
 
-## Prerequisites ##
+## Prerequisites
 
 Install [Node](https://nodejs.org/en/)
 
-## How to use ##
+## How to use
 
 ```
 $ git clone https://github.com/RickZee/dynamodb-gui.git
@@ -38,12 +38,12 @@ $ npm start
 * Table creation and deletion
 * Ability to connect to "real" Dynamo DB
 
-## Contribute ##
+## Contribute
 
 Please create [tickets for suggestions and bugs](https://github.com/RickZee/dynamodb-gui/issues). 
 
 Or - fork, fix and create a PR :)
 
-## Licence ##
+## Licence
 
 [MIT License](https://github.com/RickZee/dynamodb-gui/blob/master/LICENSE)
