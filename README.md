@@ -28,6 +28,16 @@ $ npm i
 $ npm start
 ```
 
+## Roadmap
+
+* Add query functionality to table view. Support AWS dynamodb query syntax
+* Add pagination to table view
+* Add visualization to *map* and *list* attribute types
+* Item creating, editing, deletion
+* Table modification
+* Table creation and deletion
+* Ability to connect to "real" Dynamo DB
+
 ## Contribute ##
 
 Please create [tickets for suggestions and bugs](https://github.com/RickZee/dynamodb-gui/issues). 
