@@ -37,6 +37,7 @@ $ npm start
 * Table modification
 * Table creation and deletion
 * Ability to connect to "real" Dynamo DB
+* Import/Export
 
 ## Contribute
 
