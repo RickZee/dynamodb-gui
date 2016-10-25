@@ -8,23 +8,14 @@ Currectly uses the default port 8000 to connect to local Dynamo DB.
 
 ## Prerequisites
 
-Install [Node](https://nodejs.org/en/)
+Install [Node](https://nodejs.org/)
 
 ## How to use
 
 ```
 $ git clone https://github.com/RickZee/dynamodb-gui.git
-```
-
-```
 $ cd dynamodb-gui
-```
-
-```
 $ npm i
-```
-
-```
 $ npm start
 ```
 
