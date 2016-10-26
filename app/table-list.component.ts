@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { DynamoDbService } from './app.dynamodb.service';
 
@@ -10,7 +11,7 @@ import { DynamoDbService } from './app.dynamodb.service';
     providers: [DynamoDbService]
 })
 export class TableListComponent implements OnInit {
-    tables: any[];
+    tables: Observable<any[]> = Observable.of<any[]>([]);
     error: any;
     columns: number = 3;
 
@@ -23,27 +24,12 @@ export class TableListComponent implements OnInit {
         this.getTables();
     }
 
-    getTables(): void {
-        this.dynamoDbService
-            .getTablesNames()
-            .then(tables => { this.tables = tables; this.loadTableDescriptions(tables); })
-            .then()
-            .catch(error => this.error = error);
-    }
-
     gotoDetail(table: any): void {
         let link = ['table', table.name];
         this.router.navigate(link);
     }
 
-    private loadTableDescriptions(tables: any[]): any[] {
-        for (let i = 0; i < tables.length; i++) {
-            let table = tables[i];
-            this.dynamoDbService
-                .getTableDescription(table)
-                .then((t: any) => t.isLoaded = true)
-                .catch(error => this.error = error);
-        }
-        return tables;
+    private getTables(): void {
+        this.tables = this.dynamoDbService.getTables();
     }
 }

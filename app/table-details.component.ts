@@ -13,15 +13,16 @@ import { DynamoDbService } from './app.dynamodb.service';
 })
 export class TableDetailsComponent implements OnInit {
   items: Observable<any[]>;
-  searchTerms: Subject<string>;
   table: any;
   error: any;
-  tableName: string;
+  tableName: string = 'events';
   hasItems: boolean;
   navigated = false; // true if navigated here0
-  attributeNames: Observable<string[]> = Observable.of<any[]>([]);
+  attributeNames: Observable<string[]> = Observable.of<string[]>([]);
   rows: Observable<any[]> = Observable.of<any[]>([]);
   viewType: string = 'view-panel';
+
+  private searchTerms: Subject<string> = new Subject<string>();
 
   constructor(
     private dynamoDbService: DynamoDbService,
@@ -34,6 +35,20 @@ export class TableDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.items = this.searchTerms
+      .debounceTime(300)        // wait for 300ms pause in events
+      .distinctUntilChanged()   // ignore if next search term is same as previous
+      .switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.dynamoDbService.getTableItems(this.tableName, term)
+        // or the observable of empty items if no search term
+        : Observable.of<any[]>([]))
+      .catch(error => {
+        // TODO: real error handling
+        console.log(error);
+        return Observable.of<any[]>([]);
+      });
+
     this.route.params.forEach((params: Params) => {
       if (params['name'] !== undefined) {
         this.tableName = params['name'];
@@ -43,19 +58,7 @@ export class TableDetailsComponent implements OnInit {
         this.dynamoDbService.getTableDescription(table)
           .then((table: any) => {
             this.table = table;
-            this.items = this.searchTerms
-              .debounceTime(300)        // wait for 300ms pause in events
-              .distinctUntilChanged()   // ignore if next search term is same as previous
-              .switchMap(term => term   // switch to new observable each time
-                // return the http search observable
-                ? this.dynamoDbService.getTableItems(table.name, term)
-                // or the observable of empty items if no search term
-                : Observable.of<any[]>([]))
-              .catch(error => {
-                // TODO: real error handling
-                console.log(error);
-                return Observable.of<any[]>([]);
-              });
+
             // this.dynamoDbService.getTableItems(table.name)
             //   .then((items: any) => {
             //     this.items = items.Items;
@@ -88,11 +91,11 @@ export class TableDetailsComponent implements OnInit {
   }
 
   private onItemsLoaded(items: any): void {
-    this.items = items.Items;
-    this.hasItems = this.items.length > 0;
-    let transformed = this.transformItems(this.items);
-    this.rows = transformed.rows;
-    this.attributeNames = transformed.attributeNames;
+    // this.items = items.Items;
+    // this.hasItems = this.items.length > 0;
+    // let transformed = this.transformItems(this.items);
+    // this.rows = transformed.rows;
+    // this.attributeNames = transformed.attributeNames;
   }
 
   private transformItems(items: any[]): any {

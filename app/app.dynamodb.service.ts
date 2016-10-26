@@ -8,46 +8,47 @@ import { Observable } from 'rxjs';
 export class DynamoDbService {
     private _apiUrl = 'http://localhost:8000';
 
-    private _tables: any[] = [
-        { 'name': 'table1', 'itemCount': '10' },
-        { 'name': 'table2', 'itemCount': '5' },
-        { 'name': 'table3', 'itemCount': '7' },
-        { 'name': 'table4', 'itemCount': '90' },
-        { 'name': 'table5', 'itemCount': '1' }
-    ];
-
     constructor(private http: Http) { }
 
-    getTablesNames(): Promise<any[]> {
-        // console.debug('Getting list of tables');
+    getTables(): Observable<any[]> {
+        let query = {};
 
-        return this.createRequest({}, 'ListTables')
-            .toPromise()
-            .then((res) => {
-                let names = res.TableNames as string[];
-                return names.map((n) => {return {'name': n}; } );
+        return this.createRequest2(query, 'ListTables')
+            .map((res: Response) => {
+                let names = res.json().TableNames as string[];
+                return names.map((name) => {
+                    let table: any = { 'name': name };
+                    this.getTableDescription(name)
+                        .then(td => table.definition = td)
+                        .catch(this.handleError);
+                    return table;
+                });
             })
             .catch(this.handleError);
     }
 
-    getTableDescription(table: any): Promise<any[]> {
-        // console.debug('Getting description of table ' + table.name);
+    getItems(tableName: string, searchTerm?: string): Observable<any[]> {
+        console.debug('search term  =' + searchTerm);
 
-        return this.createRequest({TableName: table.name}, 'DescribeTable')
-            .toPromise()
-            .then((res) => {
-                table.definition = res;
-                return table;
-            })
-            .catch(this.handleError);
+        let query = { TableName: tableName };
+
+        return this.createRequest2(query, 'Scan')
+            .map(res => res.json() as any[]);
     }
 
-    getTableItems(tableName: string, searchTerm: string): Promise<any[]> {
-        // console.debug('Getting items for table ' + tableName);
+    private createRequest2(body: any, action: string): Observable<Response> {
+        let bodyString = JSON.stringify(body);
 
-        return this.createRequest({TableName: tableName}, 'Scan')
+        let options = new RequestOptions({ headers: this.createHeaders(action) });
+
+        return this.http.post(this._apiUrl, bodyString, options);
+    }
+
+    private getTableDescription(tableName: string): Promise<any> {
+        let query = { TableName: tableName };
+        return this.createRequest2(query, 'DescribeTable')
             .toPromise()
-            .then(res => res)
+            .then(d => d.json().Table)
             .catch(this.handleError);
     }
 
@@ -56,19 +57,16 @@ export class DynamoDbService {
         return Promise.reject(error.message || error);
     }
 
-    private createRequest(body: any, action: string): Observable<any> {
-        let bodyString = JSON.stringify(body);
+    private createHeaders(action: string): Headers {
         let headers = new Headers();
-        headers.append('Authorization', 'AWS4-HMAC-SHA256 Credential=cUniqueSessionID/20161018/us-west-2/dynamodb/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-target;x-amz-user-agent, Signature=ec7a90f570d83862d638054c09cad1dc123b75f049744998f4b63b3c240c7813');
+
+        headers.append('Authorization',
+            'AWS4-HMAC-SHA256 Credential=cUniqueSessionID/20161018/us-west-2/dynamodb/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-target;x-amz-user-agent, Signature=ec7a90f570d83862d638054c09cad1dc123b75f049744998f4b63b3c240c7813');
         headers.append('Content-Type', 'application/x-amz-json-1.0');
         headers.append('X-Amz-Content-Sha256', '44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a');
         headers.append('X-Amz-Target', 'DynamoDB_20120810.' + action);
         headers.append('X-Amz-User-Agent', 'aws-sdk-js/2.2.4');
 
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.post(this._apiUrl, bodyString, options)
-            .map((res: Response) => {console.log(res.json()); return res.json(); })
-            .catch(this.handleError);
+        return headers;
     }
 }
