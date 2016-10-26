@@ -77,14 +77,6 @@ export class TableDetailsComponent implements OnInit {
     return typeof value === 'object';
   }
 
-  private onItemsLoaded(items: any): void {
-    // this.items = items.Items;
-    // this.hasItems = this.items.length > 0;
-    // let transformed = this.transformItems(this.items);
-    // this.rows = transformed.rows;
-    // this.attributeNames = transformed.attributeNames;
-  }
-
   private transformItems(items: any[]): any {
     let names: string[] = [];
     let rows: any[] = [];

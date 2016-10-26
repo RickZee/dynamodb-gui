@@ -1,19 +1,19 @@
 <div class="push-down-40px table-actions">
-	<div class="action-control first">
+	<div class="action-control">
 		<button md-mini-fab color="accent" (click)="goBack()">
         <i class="material-icons">keyboard_backspace</i>
     </button>
 	</div>
 
-	<div class="action-control next">
+	<div class="action-control">
 		<md-button-toggle-group [value]="viewType" (change)="changeViewType($event)">
 			<md-button-toggle value="view-table">Table View</md-button-toggle>
 			<md-button-toggle value="view-panel">Panel View</md-button-toggle>
 		</md-button-toggle-group>
 	</div>
 
-	<div class="action-control next">
-		<input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+	<div class="action-control last">
+		<md-input placeholder="Search in Items" #searchBox id="search-box" (keyup)="search(searchBox.value)"></md-input>		
 	</div>
 
 </div>
