@@ -54,7 +54,9 @@ export class TableDetailsComponent implements OnInit {
         this.filteredItems = this.searchTerms
           .debounceTime(300)
           .distinctUntilChanged()
-          .switchMap(term => this.items.filter(item => this.dynamoDbService.searchObject(term, item, contains)))
+          .switchMap(term => this.items.filter(function (item) {
+            return this.dynamoDbService.searchObject(term, item, contains);
+          }))
           .catch(error => {
             // TODO: real error handling
             console.log(error);
