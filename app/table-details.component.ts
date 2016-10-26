@@ -13,6 +13,7 @@ import { DynamoDbService } from './app.dynamodb.service';
 })
 export class TableDetailsComponent implements OnInit {
   items: Observable<any[]> = Observable.of<any[]>([]);
+  filteredItems: Observable<any[]> = Observable.of<any[]>([]);
   table: any;
   error: any;
   tableName: string = 'events';
@@ -40,19 +41,27 @@ export class TableDetailsComponent implements OnInit {
         this.tableName = params['name'];
         this.navigated = true;
 
-        this.items = this.searchTerms
+        this.items = this.dynamoDbService.getItems(this.tableName).catch(error => {
+          // TODO: real error handling
+          console.log(error);
+          return Observable.of<any[]>([]);
+        });
+
+        let contains = function (term: string, value: any) {
+          return ('' + value).toLowerCase().indexOf(('' + term).toLowerCase());
+        };
+
+        this.filteredItems = this.searchTerms
           .debounceTime(300)
           .distinctUntilChanged()
-          .switchMap(term => term
-            ? this.dynamoDbService.getItems(this.tableName, term)
-            : this.dynamoDbService.getItems(this.tableName, null))
+          .switchMap(term => this.items.filter(item => this.dynamoDbService.searchObject(term, item, contains)))
           .catch(error => {
             // TODO: real error handling
             console.log(error);
             return Observable.of<any[]>([]);
           });
 
-        this.items.subscribe(items => {
+        this.filteredItems.subscribe(items => {
           let transformed = this.transformItems(items);
           this.rows = Observable.of<any[]>(transformed.rows);
           this.attributeNames = Observable.of<any[]>(transformed.attributeNames);

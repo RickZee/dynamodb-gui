@@ -27,14 +27,37 @@ export class DynamoDbService {
             .catch(this.handleError);
     }
 
-    getItems(tableName: string, searchTerm?: string): Observable<any[]> {
-        console.log('tableName  = ' + tableName);
-        console.log('search term  = ' + searchTerm);
-
+    getItems(tableName: string): Observable<any[]> {
         let query = { TableName: tableName };
 
         return this.createRequest(query, 'Scan')
             .map(res => res.json().Items as any[]);
+    }
+
+    searchObject(term: string, obj: any, compare: Function): boolean {
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                let value = obj[key];
+
+                if (Array.isArray(value)) {
+                    for (let i = 0; i < value.length; i++) {
+                        let found = this.searchObject(term, value[i], compare);
+                        if (found) {
+                            return true;
+                        }
+                    }
+                } else if (typeof value === 'object') {
+                    let found = this.searchObject(term, value, compare);
+                    if (found) {
+                        return true;
+                    }
+                } else if (compare(term, value)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private createRequest(body: any, action: string): Observable<Response> {
@@ -69,33 +92,5 @@ export class DynamoDbService {
         headers.append('X-Amz-User-Agent', 'aws-sdk-js/2.2.4');
 
         return headers;
-    }
-
-    private searchObject(term: string, obj: any, compare: Function): boolean {
-        for (let key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                let value = obj[key];
-
-                if (Array.isArray(value)) {
-                    for (let i = 0; i < value.length; i++) {
-                        let found = this.searchObject(term, value[i], compare);
-                        if (found) {
-                            return true;
-                        }
-                    }
-                } else if (typeof value === 'object') {
-                    let found = this.searchObject(term, value, compare);
-                    if (found) {
-                        return true;
-                    }
-                }
-
-                if (compare(value, term)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }
