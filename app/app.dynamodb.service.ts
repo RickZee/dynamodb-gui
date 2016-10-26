@@ -13,7 +13,7 @@ export class DynamoDbService {
     getTables(): Observable<any[]> {
         let query = {};
 
-        return this.createRequest2(query, 'ListTables')
+        return this.createRequest(query, 'ListTables')
             .map((res: Response) => {
                 let names = res.json().TableNames as string[];
                 return names.map((name) => {
@@ -28,15 +28,18 @@ export class DynamoDbService {
     }
 
     getItems(tableName: string, searchTerm?: string): Observable<any[]> {
-        console.debug('search term  =' + searchTerm);
+        // return Observable.of<any[]>(["t", "t"]);
+
+        console.log('tableName  = ' + tableName);
+        console.log('search term  = ' + searchTerm);
 
         let query = { TableName: tableName };
 
-        return this.createRequest2(query, 'Scan')
-            .map(res => res.json() as any[]);
+        return this.createRequest(query, 'Scan')
+            .map(res => {console.log(res.json()); return res.json().Items as any[]});
     }
 
-    private createRequest2(body: any, action: string): Observable<Response> {
+    private createRequest(body: any, action: string): Observable<Response> {
         let bodyString = JSON.stringify(body);
 
         let options = new RequestOptions({ headers: this.createHeaders(action) });
@@ -46,7 +49,7 @@ export class DynamoDbService {
 
     private getTableDescription(tableName: string): Promise<any> {
         let query = { TableName: tableName };
-        return this.createRequest2(query, 'DescribeTable')
+        return this.createRequest(query, 'DescribeTable')
             .toPromise()
             .then(d => d.json().Table)
             .catch(this.handleError);

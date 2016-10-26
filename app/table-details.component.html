@@ -45,7 +45,7 @@
 	<div *ngIf="viewType==='view-panel'">
 		<dl *ngFor="let row of rows | async" class="result-panel">
 
-			<ng-container *ngFor="let attrName of attributeNames; let i = index">
+			<ng-container *ngFor="let attrName of attributeNames | async; let i = index">
 				<dt>
 					<span *ngIf="!attrName" class="null-value">-</span>
 					<span *ngIf="attrName">{{attrName}}</span>
@@ -56,11 +56,6 @@
 					<span *ngIf="row[i] && !isObject(row[i])">{{row[i]}}</span>
 				</dd>
 			</ng-container>
-
-			<!--<td *ngFor="let attr of row">
-				<span *ngIf="isObject(attr)">{{attr | json}}</span>
-				<span *ngIf="!isObject(attr)">{{attr}}</span>
-			</td>-->
 		</dl>
 
 	</div>

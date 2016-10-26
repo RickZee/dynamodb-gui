@@ -12,7 +12,7 @@ import { DynamoDbService } from './app.dynamodb.service';
   providers: [DynamoDbService]
 })
 export class TableDetailsComponent implements OnInit {
-  items: Observable<any[]>;
+  items: Observable<any[]> = Observable.of<any[]>([]);
   table: any;
   error: any;
   tableName: string = 'events';
@@ -35,43 +35,30 @@ export class TableDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.items = this.searchTerms
-      .debounceTime(300)        // wait for 300ms pause in events
-      .distinctUntilChanged()   // ignore if next search term is same as previous
-      .switchMap(term => term   // switch to new observable each time
-        // return the http search observable
-        ? this.dynamoDbService.getTableItems(this.tableName, term)
-        // or the observable of empty items if no search term
-        : Observable.of<any[]>([]))
-      .catch(error => {
-        // TODO: real error handling
-        console.log(error);
-        return Observable.of<any[]>([]);
-      });
-
     this.route.params.forEach((params: Params) => {
       if (params['name'] !== undefined) {
         this.tableName = params['name'];
         this.navigated = true;
-        let table = { name: this.tableName };
 
-        this.dynamoDbService.getTableDescription(table)
-          .then((table: any) => {
-            this.table = table;
-
-            // this.dynamoDbService.getTableItems(table.name)
-            //   .then((items: any) => {
-            //     this.items = items.Items;
-            //     this.hasItems = this.items.length > 0;
-            //     let transformed = this.transformItems(this.items);
-            //     this.rows = transformed.rows;
-            //     this.attributeNames = transformed.attributeNames;
-            //   });
+        this.items = this.searchTerms
+          .debounceTime(300)
+          .distinctUntilChanged()
+          .switchMap(term => term
+            ? this.dynamoDbService.getItems(this.tableName, term)
+            : this.dynamoDbService.getItems(this.tableName, null))
+          .catch(error => {
+            // TODO: real error handling
+            console.log(error);
+            return Observable.of<any[]>([]);
           });
 
-      } else {
-        this.navigated = false;
-        this.items = Observable.of<any[]>([]);
+        this.items.subscribe(items => {
+          let transformed = this.transformItems(items);
+          this.rows = Observable.of<any[]>(transformed.rows);
+          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
+        });
+
+        this.searchTerms.next('');
       }
     });
   }
