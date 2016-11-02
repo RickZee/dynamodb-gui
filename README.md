@@ -14,17 +14,8 @@ Install [Node](https://nodejs.org/en/)
 
 ```
 $ git clone https://github.com/RickZee/dynamodb-gui.git
-```
-
-```
 $ cd dynamodb-gui
-```
-
-```
 $ npm i
-```
-
-```
 $ npm start
 ```
 
