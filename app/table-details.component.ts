@@ -17,7 +17,6 @@ export class TableDetailsComponent implements OnInit {
   table: any;
   error: any;
   tableName: string = 'events';
-  hasItems: boolean;
   navigated = false; // true if navigated here0
   attributeNames: Observable<string[]> = Observable.of<string[]>([]);
   rows: Observable<any[]> = Observable.of<any[]>([]);
