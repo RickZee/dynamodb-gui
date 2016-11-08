@@ -36,42 +36,7 @@ export class TableDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      if (params['name'] !== undefined) {
-        this.tableName = params['name'];
-        this.navigated = true;
-
-        this.items = this.dynamoDbService.getItems(this.tableName).catch(error => {
-          // TODO: real error handling
-          console.log(error);
-          return Observable.of<any[]>([]);
-        });
-
-        let contains = function (term: string, value: any) {
-          return ('' + value).toLowerCase().indexOf(('' + term).toLowerCase());
-        };
-
-        this.filteredItems = this.searchTerms
-          .debounceTime(300)
-          .distinctUntilChanged()
-          .switchMap(term => this.items.filter(function (item) {
-            return this.dynamoDbService.searchObject(term, item, contains);
-          }))
-          .catch(error => {
-            // TODO: real error handling
-            console.log(error);
-            return Observable.of<any[]>([]);
-          });
-
-        this.filteredItems.subscribe(items => {
-          let transformed = this.transformItems(items);
-          this.rows = Observable.of<any[]>(transformed.rows);
-          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
-        });
-
-        this.searchTerms.next('');
-      }
-    });
+    this.getItems();
   }
 
   changeViewType(evt: any): any {
@@ -86,6 +51,51 @@ export class TableDetailsComponent implements OnInit {
 
   isObject(value: any): boolean {
     return typeof value === 'object';
+  }
+
+  private getItems(): void {
+    this.route.params.forEach((params: Params) => {
+      if (params['name'] !== undefined) {
+        this.tableName = params['name'];
+        this.navigated = true;
+
+        this.items = this.dynamoDbService.getItems(this.tableName);
+
+        let contains = function (term: string, value: any) {
+          return ('' + value).toLowerCase().indexOf(('' + term).toLowerCase());
+        };
+
+        this.items.subscribe(items => {
+          let transformed = this.transformItems(items);
+          this.rows = Observable.of<any[]>(transformed.rows);
+          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
+          console.log('Loading items...');
+        });
+
+        let service = this.dynamoDbService;
+
+        this.filteredItems = this.searchTerms
+          .debounceTime(300)
+          .distinctUntilChanged()
+          .switchMap(term => this.items.filter(function (item) {
+            return service.searchObject(term, item, contains);
+          }))
+          .catch(error => {
+            // TODO: real error handling
+            console.log(error);
+            return Observable.of<any[]>([]);
+          });
+
+        this.filteredItems.subscribe(items => {
+            console.log('Filtering items ...');
+          // let transformed = this.transformItems(items);
+          // this.rows = Observable.of<any[]>(transformed.rows);
+          // this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
+        });
+
+        this.searchTerms.next('');
+      }
+    });
   }
 
   private transformItems(items: any[]): any {

@@ -15,7 +15,7 @@ const routes: Routes = [
     component: TableListComponent
   },
   {
-    path: 'table/:name',
+    path: 'tables/:name',
     component: TableDetailsComponent
   }
 ];
