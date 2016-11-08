@@ -64,7 +64,7 @@ export class TableDetailsComponent implements OnInit {
         this.items = this.dynamoDbService.getItems(this.tableName);
 
         let contains = function (term: string, value: any) {
-          return ('' + value).toLowerCase().indexOf(('' + term).toLowerCase());
+          return ('' + value).toLowerCase().indexOf(('' + term).toLowerCase()) >= 0;
         };
 
         this.items.subscribe(items => {
@@ -76,10 +76,18 @@ export class TableDetailsComponent implements OnInit {
         this.filteredItems = this.searchTerms
           .debounceTime(300)
           .distinctUntilChanged()
-          .switchMap(term => this.items.filter(function (item) {
-            // console.log(item);
-            return service.searchObject(term, item, contains);
-          }))
+          .switchMap(term => {
+            console.log(term);
+            this.items.subscribe(items => {
+              let filtered: any[] = items.filter(x => service.searchObject(term, x, contains));
+              this.filteredCount = filtered.length;
+                console.log('Filtering items ... ' + filtered.length);
+              let transformed = this.transformItems(filtered);
+              this.rows = Observable.of<any[]>(transformed.rows);
+              this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
+            });
+            return this.filteredItems;
+          })
           .catch(error => {
             // TODO: real error handling
             console.log(error);
@@ -87,11 +95,6 @@ export class TableDetailsComponent implements OnInit {
           });
 
         this.filteredItems.subscribe(items => {
-          this.filteredCount = items.length;
-            console.log('Filtering items ...');
-          let transformed = this.transformItems(items);
-          this.rows = Observable.of<any[]>(transformed.rows);
-          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
         });
 
         this.searchTerms.next('');
