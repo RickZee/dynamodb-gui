@@ -21,7 +21,6 @@ $ npm start
 
 ## Roadmap
 
-* Add filtering functionality to table view
 * Add visualization to tp display *map* and *list* attribute types
 * Item creating, editing, deletion
 * Table modification
