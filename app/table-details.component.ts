@@ -22,6 +22,8 @@ export class TableDetailsComponent implements OnInit {
   attributeNames: Observable<string[]> = Observable.of<string[]>([]);
   rows: Observable<any[]> = Observable.of<any[]>([]);
   viewType: string = 'view-panel';
+  itemCount: number = 0;
+  filteredCount: number = 0;
 
   private searchTerms: Subject<string> = new Subject<string>();
 
@@ -66,10 +68,7 @@ export class TableDetailsComponent implements OnInit {
         };
 
         this.items.subscribe(items => {
-          let transformed = this.transformItems(items);
-          this.rows = Observable.of<any[]>(transformed.rows);
-          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
-          console.log('Loading items...');
+          this.itemCount = items.length;
         });
 
         let service = this.dynamoDbService;
@@ -78,6 +77,7 @@ export class TableDetailsComponent implements OnInit {
           .debounceTime(300)
           .distinctUntilChanged()
           .switchMap(term => this.items.filter(function (item) {
+            // console.log(item);
             return service.searchObject(term, item, contains);
           }))
           .catch(error => {
@@ -87,10 +87,11 @@ export class TableDetailsComponent implements OnInit {
           });
 
         this.filteredItems.subscribe(items => {
+          this.filteredCount = items.length;
             console.log('Filtering items ...');
-          // let transformed = this.transformItems(items);
-          // this.rows = Observable.of<any[]>(transformed.rows);
-          // this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
+          let transformed = this.transformItems(items);
+          this.rows = Observable.of<any[]>(transformed.rows);
+          this.attributeNames = Observable.of<any[]>(transformed.attributeNames);
         });
 
         this.searchTerms.next('');

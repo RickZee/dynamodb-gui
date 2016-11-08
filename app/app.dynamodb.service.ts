@@ -35,8 +35,6 @@ export class DynamoDbService {
     }
 
     searchObject(term: string, obj: any, compare: Function): boolean {
-         console.log(term);
-
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) {
                 let value = obj[key];
@@ -58,7 +56,6 @@ export class DynamoDbService {
                 }
             }
         }
-
         return false;
     }
 
