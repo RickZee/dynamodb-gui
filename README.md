@@ -1,8 +1,9 @@
 # Amazon Dynamo DB management tool
 
-*Please Note: this is a __very__ work in progress.* 
+*Please Note: this is a __very__ work in progress.*
 
 ## Purpose
+
 To provide a simple GUI to view, and in the future manage, your local Dynamo DB instance.
 Currectly uses the default port 8000 to connect to local Dynamo DB.
 
@@ -32,7 +33,7 @@ $ npm start
 
 ## Contribute
 
-Please create [tickets for suggestions and bugs](https://github.com/RickZee/dynamodb-gui/issues). 
+Please create [tickets for suggestions and bugs](https://github.com/RickZee/dynamodb-gui/issues).
 
 Or - fork, fix and create a PR :)
 
