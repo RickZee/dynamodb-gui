@@ -41,9 +41,6 @@
       '@angular/material': {
         format: 'cjs',
         main: 'material.umd.js'
-      },
-      'json-formatter-js': {
-        main: '/dist/json-formatter.js'
       }
     }
   });
