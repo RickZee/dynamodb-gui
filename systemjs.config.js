@@ -35,16 +35,15 @@
         defaultExtension: 'js'
       },
       rxjs: {
+        main: '/bundles/Rx.min.js',
         defaultExtension: 'js'
       },
-
       '@angular/material': {
         format: 'cjs',
         main: 'material.umd.js'
       },
-      'rxjs': {
-        main: '/bundles/Rx.min.js',
-        defaultExtension: 'js'
+      'json-formatter-js': {
+        main: '/dist/json-formatter.js'
       }
     }
   });
