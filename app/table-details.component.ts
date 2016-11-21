@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import JSONFormatter from './json-formatter';
+// import JSONFormatter from './json-formatter/json-formatter';
 
 import { DynamoDbService } from './app.dynamodb.service';
 
 
-const myJSON = {ans: 42};
+// const myJSON = {ans: 42};
 
-const formatter = new JSONFormatter(myJSON);
+// const formatter = new JSONFormatter(myJSON);
 
-document.body.appendChild(formatter.render());
+// document.body.appendChild(formatter.render());
 
 @Component({
   moduleId: module.id,
